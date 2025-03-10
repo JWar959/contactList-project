@@ -17,6 +17,10 @@ app.get('/signup', (req, res) => {
     res.render('signup');
 })
 
+app.get('/newContact', (req, res) => {
+    res.render('newContact');
+})
+
 app.listen(8080, () => {
     console.log('App listening on port 8080');
 });

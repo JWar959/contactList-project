@@ -1,0 +1,16 @@
+extends layout.pug
+
+block content
+    h1 Sign in
+    label(for="username") Username
+    br
+    input( type="text" name="username" )
+    label(for="password") Password
+    br
+    input(name = "password" type = "password")
+    button(type="submit") Sign in
+    a(href='/') Nevermind
+    br
+    span Don't have an account yet? 
+    a(href="/signup") Sign up here!
+

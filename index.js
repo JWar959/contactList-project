@@ -34,7 +34,7 @@ class DataStore {
             )
         `;
     
-        await this.db.run(createContactsTable); // ✅ Correct usage
+        await this.db.run(createContactsTable);
         console.log("Database Initialized Successfully!");
     }
     

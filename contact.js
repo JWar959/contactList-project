@@ -14,6 +14,9 @@ const pug = require('pug');
 const express = require('express');
 const session = require('express-session');
 
+// need to connect the routes here since they're split into different file
+const contactsRouter = require('./routes/contacts');
+
 const app = express();
 
 app.use(express.urlencoded({extended : true})); // enables body parsing
@@ -44,6 +47,38 @@ app.use((req, res, next) => {
     next();
 });
 
+/*
+// Write a function to test using the database
+async function testDataStore(){
+
+    const db = new Database();
+    await db.initialize();
+
+    // insert a contact into the database
+    const newContactId = await db.create('Contacts', [
+
+
+        {column: 'firstName', value: 'John'},
+        {column: 'lastName', value: 'Warren'},
+        {column: 'phone', value:'555-555-5555' },
+        {column: 'email', value:'jwarren@example.com' },
+        {column: 'street', value: "123 Elm Street" }
+    ]);
+
+    console.log(`Entry placed into contact list with ID: ${newContactId}`);
+
+    // read contacts from the database
+    const contacts = await db.read('Contacts', []);
+    console.log('All Contacts: ', contacts);
+
+}
+
+testDataStore().catch(console.error);
+*/
+
+// connect the routes that we split into a seperate folder
+app.use('/', require('./routes/contacts'));
+
 app.get('/', async (req, res) => {
     // Collect information from the db
     const contacts = await req.db.read('Contacts', []);
@@ -61,25 +96,6 @@ app.get('/signup', (req, res) => {
 app.get('/newContact', (req, res) => {
     res.render('newContact');
 })
-
-app.post('/newContact', async (req, res) => {
-    await req.db.create('Contacts', [
-        { column: 'firstName', value: req.body.firstNameCreate },
-        { column: 'lastName', value: req.body.lastNameCreate },
-        { column: 'phone', value: req.body.phoneNumCreate },
-        { column: 'email', value: req.body.emailCreate },
-        { column: 'street', value: req.body.streetCreate },
-        { column: 'city', value: req.body.cityCreate },
-        { column: 'state', value: req.body.stateCreate },
-        { column: 'zip', value: req.body.zipCreate },
-        { column: 'country', value: req.body.countryCreate },
-        { column: 'contactByEmail', value: req.body.emailCheck !== undefined ? 1 : 0 },
-        { column: 'contactByPhone', value: req.body.phoneCheck !== undefined ? 1 : 0 }
-    ]);
-    res.redirect('/');
-});
-
-
 
 app.listen(8080, () => {
     console.log('App listening on port 8080');

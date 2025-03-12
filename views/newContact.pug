@@ -7,53 +7,54 @@ block content
     h1 Create Contact
 
     hr
-    p Basic Info
-    label(for = 'firstNameCreate') First Name:
-    input( type = "text" name = 'firstNameCreate')
+    form(action = '/newContact' method = 'post' )
+        p Basic Info
+        label(for = 'firstNameCreate') First Name:
+        input( type = "text" name = 'firstNameCreate')
 
-    label( for = 'lastNameCreate') Last Name:
-    input( type = 'text', name = 'lastNameCreate')
+        label( for = 'lastNameCreate') Last Name:
+        input( type = 'text', name = 'lastNameCreate')
 
-    label( for = 'phoneNumCreate') Phone:
-    input( type = 'text' name = 'phoneNumCreate')
+        label( for = 'phoneNumCreate') Phone:
+        input( type = 'text' name = 'phoneNumCreate')
 
-    label( for = 'emailCreate') Email:
-    input( type = 'input' name = 'emailCreate')
+        label( for = 'emailCreate') Email:
+        input( type = 'input' name = 'emailCreate')
     
-    hr
-    br
-    hr
+        hr
+        br
+        hr
 
-    h2 Address
-    label( for = 'streetCreate') Street:
-    input( type = 'text' name = 'streetCreate')
+        h2 Address
+        label( for = 'streetCreate') Street:
+        input( type = 'text' name = 'streetCreate')
 
-    label( for = 'cityCreate') City:
-    input( type = 'text' name = 'cityCreate')
+        label( for = 'cityCreate') City:
+        input( type = 'text' name = 'cityCreate')
 
-    label(for = 'stateCreate') State:
-    input( type = 'text' name = 'stateCreate')
+        label(for = 'stateCreate') State:
+        input( type = 'text' name = 'stateCreate')
 
-    label( for = 'zipCreate') Zip :
-    input(type = 'text' name = 'zipCreate')
+        label( for = 'zipCreate') Zip :
+        input(type = 'text' name = 'zipCreate')
 
-    label(for = 'countryCreate') Country:
-    input( type = 'text' name = 'countryCreate')
-    
-    hr
-    br
-    hr
+        label(for = 'countryCreate') Country:
+        input( type = 'text' name = 'countryCreate')
+        
+        hr
+        br
+        hr
 
-    h2 Contact Preferences 
-    input(type ='checkbox' name = 'phoneCheck' checked='true') 
-    span Contact by phone
-    br
-    input(type = 'checkbox' name = 'emailCheck' checked='true') 
-    span Contact by email
-    br
-    input(type = 'checkbox' name = 'mailCheck' checked='true') 
-    span Contact by mail
-    hr
+        h2 Contact Preferences 
+        input(type ='checkbox' name = 'phoneCheck' checked='true') 
+        span Contact by phone
+        br
+        input(type = 'checkbox' name = 'emailCheck' checked='true') 
+        span Contact by email
+        br
+        input(type = 'checkbox' name = 'mailCheck' checked='true') 
+        span Contact by mail
+        hr
 
-    button(type = 'submit' name='createSubmit') Add 
+        button(type = 'submit' name='createSubmit') Add 
     a(href = '/') Cancel   

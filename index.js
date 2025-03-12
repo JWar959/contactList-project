@@ -51,7 +51,7 @@ class DataStore {
     async create(table, data) {
         const params = Array(data.length).fill('?')
         const sql = `INSERT into ${table} (${data.map(d => d.column).join(',')}) values (${params.join(',')})`;
-        console.log(sql, data.map(d => d.value));
+        //console.log(sql, data.map(d => d.value));
         const result = await this.db.run(
             sql,
             data.map(d => d.value));
@@ -66,7 +66,7 @@ class DataStore {
         if (query.length > 0) {
             sql += ` WHERE ${query.map(d => `${d.column} = ?`).join(' and ')}`
         }
-        console.log(sql, query.map(d => d.value));
+        //console.log(sql, query.map(d => d.value));
         return await this.db.all(
             sql, query.map(d => d.value)
         );

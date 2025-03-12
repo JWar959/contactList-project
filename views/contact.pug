@@ -1,6 +1,9 @@
 extends layout.pug
 
 block content
+    if error
+        p(style = "color: red")= error
+         
     a(href='/login') Sign in
     h1 Contact Home
     a( href = 'newContact') Create a new contact

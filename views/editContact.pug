@@ -1,0 +1,10 @@
+extends layout.pug
+
+block content
+    if error
+       p(style='color: red')= error
+
+    a(href='/login') Sign in
+
+    h1 Edit Contact 
+    h2 #{contact.firstName} #{contact.lastName}

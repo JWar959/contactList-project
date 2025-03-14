@@ -1,7 +1,7 @@
 extends layout.pug
 
 block content
-    if erorr
+    if error
         p(style='color: red')= error
 
     a(href='login') Sign in
@@ -29,9 +29,9 @@ block content
             span  #{contact.email}
         p
             if contact.contactByEmail === 1
-                i May be contacted by mail
+                i May be contacted by email
             else
-                i May NOT be contacted by mail 
+                i May NOT be contacted by email 
         hr
     div
         p 
@@ -49,6 +49,6 @@ block content
                 i May NOT be contacted by mail  
         hr
 
-    a(href='edit') Edit contact
+    a(href=`/${contact.id}/edit`) Edit contact
     br
-    a(href='delete') Delete contact
+    a(href=`/${contact.id}/delete`) Delete contact

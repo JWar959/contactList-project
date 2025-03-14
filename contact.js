@@ -75,27 +75,28 @@ async function testDataStore(){
 
 testDataStore().catch(console.error);
 */
-
-// connect the routes that we split into a seperate folder
-app.use('/', require('./routes/contacts'));
-
-app.get('/', async (req, res) => {
-    // Collect information from the db
-    const contacts = await req.db.read('Contacts', []);
-    res.render('contact', {contacts});
-});
-
 app.get('/login', (req, res) => {
     res.render('login');
-})
-
-app.get('/signup', (req, res) => {
-    res.render('signup');
 })
 
 app.get('/newContact', (req, res) => {
     res.render('newContact');
 })
+
+// connect the routes that we split into a seperate folder
+app.use('/', require('./routes/contacts'));
+
+app.get('/signup', (req, res) => {
+    res.render('signup');
+})
+
+/*
+app.get('/', async (req, res) => {
+    // Collect information from the db
+    const contacts = await req.db.read('Contacts', []);
+    res.render('contact', {contacts});
+});
+*/
 
 app.listen(8080, () => {
     console.log('App listening on port 8080');

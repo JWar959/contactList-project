@@ -1,0 +1,7 @@
+extends layout.pug
+
+block content
+    if erorr
+        p(style='color: red')= error
+    h1 Contact Info
+    h2 #{contact.firstName} #{contact.lastName}

@@ -56,5 +56,29 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/:id', async (req, res) =>{
+    // Capture the contacts ID from the database
+    const contactId = req.params.id;
+
+    // Collect the contacts information from the database within a try/catch block
+    try{
+        const contact = await req.db.read('Contacts', [
+            { column: 'id', value: contactId }
+        ]);
+
+        // If nothing was found, then we'll return an error
+        if(contact.length === 0 ){
+            return res.render('contactDetails', {error: 'Contact not found'});
+        }
+
+        // If we're here, we're safe to render since a contact was found
+        res.render('contactDetails', { contact: contact[0]});
+
+    }catch(error){
+        console.error("Error retrieving the contact information: ", error);
+        res.render('contactDetails', {error: "Failed to retrieve contact information from database."});
+    }
+});
+
 
 module.exports = router;

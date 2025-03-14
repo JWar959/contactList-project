@@ -15,10 +15,11 @@ block content
     p
         strong Phone Number: 
         span  #{contact.phone}
-        if contact.contactByEmail === 1
-            i May be contacted by phone or text
-        else
-            i May NOT be contacted by phone or text
+    
+    if contact.contactByPhone === 1
+        i May be contacted by phone or text
+    else
+        i May NOT be contacted by phone or text    
     hr
 
     // display email address
@@ -26,7 +27,11 @@ block content
         p
             strong Email address
             span  #{contact.email}
-        i May be contacted by email
+        p
+            if contact.contactByEmail === 1
+                i May be contacted by mail
+            else
+                i May NOT be contacted by mail 
         hr
     div
         p 

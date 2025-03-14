@@ -9,13 +9,16 @@ block content
     h1 Contact Info
     h2 #{contact.firstName} #{contact.lastName}
     hr
-    a(href='contact') Back to list
+    a(href='/') Back to list
     br
 
     p
         strong Phone Number: 
         span  #{contact.phone}
-    i May be contacted by phone or text
+        if contact.contactByEmail === 1
+            i May be contacted by phone or text
+        else
+            i May NOT be contacted by phone or text
     hr
 
     // display email address
@@ -35,7 +38,10 @@ block content
         span #{contact.country}
         br
         p
-            i May NOT be contacted by mail
+            if contact.contactByEmail === 1
+                i May be contacted by mail
+            else
+                i May NOT be contacted by mail  
         hr
 
     a(href='edit') Edit contact

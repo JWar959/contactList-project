@@ -3,5 +3,41 @@ extends layout.pug
 block content
     if erorr
         p(style='color: red')= error
+
+    a(href='login') Sign in
+
     h1 Contact Info
     h2 #{contact.firstName} #{contact.lastName}
+    hr
+    a(href='contact') Back to list
+    br
+
+    p
+        strong Phone Number: 
+        span  #{contact.phone}
+    i May be contacted by phone or text
+    hr
+
+    // display email address
+    div
+        p
+            strong Email address
+            span  #{contact.email}
+        i May be contacted by email
+        hr
+    div
+        p 
+            b Address:    
+        span #{contact.street}
+        br 
+        span #{contact.city}, #{contact.state} #{contact.zip}
+        br
+        span #{contact.country}
+        br
+        p
+            i May NOT be contacted by mail
+        hr
+
+    a(href='edit') Edit contact
+    br
+    a(href='delete') Delete contact

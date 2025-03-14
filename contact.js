@@ -83,12 +83,13 @@ app.get('/newContact', (req, res) => {
     res.render('newContact');
 })
 
-// connect the routes that we split into a seperate folder
-app.use('/', require('./routes/contacts'));
-
 app.get('/signup', (req, res) => {
     res.render('signup');
 })
+
+// connect the routes that we split into a seperate folder
+app.use('/', require('./routes/contacts'));
+
 
 /*
 app.get('/', async (req, res) => {

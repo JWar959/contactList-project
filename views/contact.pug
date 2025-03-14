@@ -5,7 +5,7 @@ block content
         p(style = "color: red")= error
          
     a(href='/login') Sign in
-    h1 Contact Home
+    h1 Contact List
     a( href = 'newContact') Create a new contact
 
     table
@@ -16,4 +16,11 @@ block content
                 th Email
                 th Address
                 th Contact
-        tbody        
+        tbody
+            each c in contacts
+                tr
+                    td #{c.firstName}
+                    td #{c.phone}
+                    td #{c.email}
+                    td #{c.street}, #{c.city}
+                    td        

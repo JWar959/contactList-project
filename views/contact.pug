@@ -19,8 +19,15 @@ block content
         tbody
             each c in contacts
                 tr
-                    td #{c.firstName}
+                    td #{c.firstName} #{c.lastName}
                     td #{c.phone}
                     td #{c.email}
-                    td #{c.street}, #{c.city}
-                    td        
+                    td #{c.street}, #{c.city} #{c.state} #{c.zip} #{c.country}
+                    td
+                        label 
+                            input(type = 'checkbox', name = 'phoneCheckbox', checked = (c.contactByPhone === 1), disabled)
+                            | Phone
+                            br
+                        label
+                            input(type = 'checkbox', name = 'emailCheckbox', checked = (c.contactByEmail === 1), disabled)
+                            | Email

@@ -48,7 +48,7 @@ router.get('/', async (req, res) => {
     try{
         // Get all rows from the Contacts table
         const contacts = await req.db.read('Contacts', []); // This should get all of the contacts
-        res.render('contact', {contacts}); // This should send the contacts to the view file
+        res.render('contact', { contacts }); // This should send the contacts info to the view file
     }catch (error){
         // if we're here, something went wrong
         console.error('Error fetching contacts:', error);

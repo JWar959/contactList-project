@@ -42,7 +42,8 @@ router.post('/newContact', async (req, res) => {
         { column: 'zip', value: req.body.zipCreate },
         { column: 'country', value: req.body.countryCreate },
         { column: 'contactByEmail', value: req.body.emailCheck !== undefined ? 1 : 0 },
-        { column: 'contactByPhone', value: req.body.phoneCheck !== undefined ? 1 : 0 }
+        { column: 'contactByPhone', value: req.body.phoneCheck !== undefined ? 1 : 0 },
+        { column: 'contactByMail' , value: req.body.mailCheck !== undefined ? 1 : 0 }
     ]);
     
     // Print to the console if a contact was added

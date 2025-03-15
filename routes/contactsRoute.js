@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 
+
 router.get('/:id/edit', async (req, res) =>{
     // Capture the contacts ID from the database
     const contactId = req.params.id;
@@ -23,6 +24,42 @@ router.get('/:id/edit', async (req, res) =>{
     }catch(error){
         console.error("Error retrieving the contact information: ", error);
         res.render('contactDetails', {error: "Failed to retrieve contact information from database."});
+    }
+});
+
+
+router.post('/:id/edit', async (req, res) =>{
+    // Capture the contacts ID from the database
+    const contactId = req.params.id;
+
+    // Collect data from form
+    const updatedData = [
+        { column: 'firstName', value: req.body.firstName },
+        { column: 'lastName', value: req.body.lastName },
+        { column: 'phone', value: req.body.phone },
+        { column: 'email', value: req.body.email },
+        { column: 'street', value: req.body.street || '' },
+        { column: 'city', value: req.body.city || '' },
+        { column: 'state', value: req.body.state || '' },
+        { column: 'zip', value: req.body.zip || '' },
+        { column: 'country', value: req.body.country || '' },
+        { column: 'contactByEmail', value: req.body.contactByEmail ? 1 : 0 },
+        { column: 'contactByPhone', value: req.body.contactByPhone ? 1 : 0 },
+        { column: 'contactByMail', value: req.body.contactByMail  ? 1 : 0 }
+    ];    
+
+    // Collect the contacts information from the database within a try/catch block
+    try{
+        // Try to update the contact's information from what we collected in the form
+        await req.db.update('Contacts', updatedData, [
+            {column: 'id', value: contactId}
+        ]);
+
+        console.log(`Contact updated successfully`);
+        res.redirect(`/contact/${contactId}`); // Return to contact details page
+    }catch(error){
+        console.error('Error updating contact:', error);
+        res.render('editContact', { contact: updatedData, error: 'Failed to update the contact. Please try again.'});
     }
 });
 

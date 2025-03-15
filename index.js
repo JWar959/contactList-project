@@ -30,7 +30,8 @@ class DataStore {
             { name: 'zip', type: 'TEXT' },
             { name: 'country', type: 'TEXT' },
             { name: 'contactByEmail', type: 'INTEGER' },
-            { name: 'contactByPhone', type: 'INTEGER' }
+            { name: 'contactByPhone', type: 'INTEGER' },
+            { name: 'contactByMail', type: 'INTEGER' }
         ], 'id');
     
         console.log("Contacts Database Initialized Successfully!");

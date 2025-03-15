@@ -1,6 +1,7 @@
 const assert = require('assert');
 const sqlite = require('sqlite-async');
 
+
 class DataStore {
     constructor() {
         // Read Configuration
@@ -17,28 +18,34 @@ class DataStore {
     
         await this.connect();
     
-        const createContactsTable = `
-            CREATE TABLE IF NOT EXISTS Contacts (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                firstName TEXT,
-                lastName TEXT,
-                phone TEXT,
-                email TEXT,
-                street TEXT,
-                city TEXT,
-                state TEXT,
-                zip TEXT,
-                country TEXT,
-                contactByEmail INTEGER,
-                contactByPhone INTEGER
-            )
-        `;
+        await this.schema('Contacts', [
+            { name: 'id', type: 'INTEGER' },
+            { name: 'firstName', type: 'TEXT' },
+            { name: 'lastName', type: 'TEXT' },
+            { name: 'phone', type: 'TEXT' },
+            { name: 'email', type: 'TEXT' },
+            { name: 'street', type: 'TEXT' },
+            { name: 'city', type: 'TEXT' },
+            { name: 'state', type: 'TEXT' },
+            { name: 'zip', type: 'TEXT' },
+            { name: 'country', type: 'TEXT' },
+            { name: 'contactByEmail', type: 'INTEGER' },
+            { name: 'contactByPhone', type: 'INTEGER' }
+        ], 'id');
     
-        await this.db.run(createContactsTable);
-        console.log("Database Initialized Successfully!");
+        console.log("Contacts Database Initialized Successfully!");
+
+        await this.schema('Users', [
+            {name: 'id', type: 'INTEGER'},
+            {name: 'firstName', type: 'TEXT'},
+            {name: 'lastName', type: 'TEXT'},
+            {name: 'username', type: 'TEXT UNIQUE'}, // This should help prevent duplicate usernames
+            {name: 'password', type: 'TEXT'}
+        ], 'id');
+
+        console.log('Users Database Initialized Succesfully');
     }
     
-
     async schema(table, schema, pkey) {
         const sql = `CREATE TABLE IF NOT EXISTS "${table}" 
             (${schema.map(c => `"${c.name}" ${c.type}`).join(", ")}, 

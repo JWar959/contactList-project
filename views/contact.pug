@@ -20,7 +20,7 @@ block content
             each c in contacts
                 tr
                     td 
-                        a(href = `/${c.id}`) #{c.firstName} #{c.lastName}
+                        a(href = `/contact/${c.id}`) #{c.firstName} #{c.lastName}
                     td #{c.phone}
                     td #{c.email}
                     td #{c.street}, #{c.city} #{c.state} #{c.zip} #{c.country}

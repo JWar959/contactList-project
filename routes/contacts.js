@@ -2,6 +2,12 @@ const express = require('express');
 const router = express.Router();
 
 
+
+
+router.get('/newContact', (req, res) => {
+    res.render('newContact');
+})
+
 router.post('/newContact', async (req, res) => {
  
     // Use the middleware to check if the user already exists in the database
@@ -18,6 +24,7 @@ router.post('/newContact', async (req, res) => {
     // in the data base
     if(exisitingContact.length > 0){
         console.log('Sorry, that contact already exists. Returning you to the homepage');
+        const contacts = await req.db.read('Contacts', []);
         res.render('contact', { error: 'This contact already exists.'});
         return;
     }
@@ -44,6 +51,14 @@ router.post('/newContact', async (req, res) => {
 
 });
 
+router.get('/login', (req, res) => {
+    res.render('login');
+})
+
+router.get('/signup', (req, res) => {
+    res.render('signup');
+})
+
 router.get('/', async (req, res) => {
     try{
         // Get all rows from the Contacts table
@@ -57,31 +72,7 @@ router.get('/', async (req, res) => {
 });
 
 
-
-router.get('/:id/edit', async (req, res) =>{
-    // Capture the contacts ID from the database
-    const contactId = req.params.id;
-
-    // Collect the contacts information from the database within a try/catch block
-    try{
-        const contact = await req.db.read('Contacts', [
-            { column: 'id', value: contactId }
-        ]);
-
-        // If nothing was found, then we'll return an error
-        if(contact.length === 0 ){
-            return res.render('contactDetails', {error: 'Contact not found'});
-        }
-
-        // If we're here, we're safe to render since a contact was found
-        res.render('editContact', { contact: contact[0]});
-
-    }catch(error){
-        console.error("Error retrieving the contact information: ", error);
-        res.render('contactDetails', {error: "Failed to retrieve contact information from database."});
-    }
-});
-
+/*
 router.get('/:id', async (req, res) =>{
     // Capture the contacts ID from the database
     const contactId = req.params.id;
@@ -105,29 +96,5 @@ router.get('/:id', async (req, res) =>{
         res.render('contactDetails', {error: "Failed to retrieve contact information from database."});
     }
 });
-
-router.get('/:id', async (req, res) =>{
-    // Capture the contacts ID from the database
-    const contactId = req.params.id;
-
-    // Collect the contacts information from the database within a try/catch block
-    try{
-        const contact = await req.db.read('Contacts', [
-            { column: 'id', value: contactId }
-        ]);
-
-        // If nothing was found, then we'll return an error
-        if(contact.length === 0 ){
-            return res.render('contactDetails', {error: 'Contact not found'});
-        }
-
-        // If we're here, we're safe to render since a contact was found
-        res.render('contactDetails', { contact: contact[0]});
-
-    }catch(error){
-        console.error("Error retrieving the contact information: ", error);
-        res.render('contactDetails', {error: "Failed to retrieve contact information from database."});
-    }
-});
-
+*/
 module.exports = router;

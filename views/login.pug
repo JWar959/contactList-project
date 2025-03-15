@@ -1,6 +1,8 @@
 extends layout.pug
 
 block content
+    if created
+        p(style='color: green')= created        
     h1 Sign in
     label(for="username") Username
     br

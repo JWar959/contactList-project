@@ -48,7 +48,7 @@ async function addDefaultUser(db){
     }
     else{
         // If we're here, the account already exists
-        console.log('Admin account already exists ${adminUsername}');
+        console.log(`Admin account already exists ${adminUsername}`);
     }
 
 }
@@ -132,6 +132,7 @@ app.get('/', async (req, res) => {
 // connect the routes that we split into a seperate folder
 app.use('/accounts', require('./routes/accountsRoute'));
 app.use('/contact', require('./routes/contactsRoute'));
+app.use('/', require('./routes/accountsRoute'));
 app.use('/', require('./routes/contacts'));
 
 

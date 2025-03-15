@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
 
 router.get('/login', (req, res) => {
-    res.render('login');
+    const createdMessage = req.query.created;
+    res.render('login', {created: createdMessage});
 });
 
 router.get('/signup', (req, res) => {
@@ -48,20 +50,58 @@ router.post('/login', async (req, res) => {
     }
 });
 
-/*
-router.post('/signup', (req, res) => {
-*/
 
-/*
-           // If we're here, then we didn't find a match in our databse and can continue
-           await req.db.create('Users', [
-            {column: 'firstName', value: req.body.firstName},
-            {column: 'lastName', value: req.body.lastName},
-            {column: 'username', value: req.body.username},
-            {column: 'password', value: req.body.password}
+router.post('/signup', async (req, res) => {
+
+    // First thing we'll do, is collect the data from the req
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const usernameTemp = req.body.usernameTemp;
+    const passwordTemp = req.body.passwordTemp;
+    const confirmPassTemp = req.body.confirmPassTemp;
+
+    // Check to see if the password and confirm password match
+    if(passwordTemp !== confirmPassTemp){
+        // If we're here, they don't match, so send it back
+        console.log('Passwords do not match. Please re-enter matching passwords');
+        res.render('signup', { error: 'Passwords do not match. Please try again '});
+        return 
+    }
+
+    // If we're here, the passwords match and we can continue
+    // Next, we'll check if the username already exists
+    try{
+        const userNameCheck= await req.db.read('Users', [
+            { column: 'username', value: usernameTemp}
         ]);
-        console.log('User added to list of registered users.');
-        res.redirect('/');
-*/
+    
+        if(userNameCheck.length > 0){
+            // if we're here, we found an exisiting user with same username
+            console.log('Exisiting user with matching username found in data base');
+            res.render('signup', { error: 'Exisiting user with matching username exists. Please try different username'});
+            return;
+        }
+    
+        // if we're here, than password and username are good to continue
+        // hash and salt the password is next
+        const salt = bcrypt.genSaltSync(10);
+        const hashedPassword = bcrypt.hashSync(passwordTemp, salt);
+    
+        // Now, we can enter the new user in the users database
+        await req.db.create('Users', [
+            { column: 'firstName', value: firstName},
+            { column: 'lastName', value: lastName},
+            { column: 'username', value: usernameTemp},
+            { column: 'password', value: hashedPassword}
+        ]);
+    
+        console.log(`New user created ${userNameCheck}`);
+        res.redirect(`/login?created=Account created. Please login`);
+    }catch(error){
+        console.error('Error creating the user', error);
+        res.render('signup', {error: 'Failed to create user, please try again.'});
+    }
+
+});
 
 module.exports = router;

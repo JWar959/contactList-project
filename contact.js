@@ -130,6 +130,7 @@ app.get('/', async (req, res) => {
 
 
 // connect the routes that we split into a seperate folder
+app.use('/accounts', require('./routes/accountsRoute'));
 app.use('/contact', require('./routes/contactsRoute'));
 app.use('/', require('./routes/contacts'));
 

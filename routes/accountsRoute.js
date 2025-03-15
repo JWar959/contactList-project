@@ -50,7 +50,6 @@ router.post('/login', async (req, res) => {
     }
 });
 
-
 router.post('/signup', async (req, res) => {
 
     // First thing we'll do, is collect the data from the req
@@ -101,7 +100,6 @@ router.post('/signup', async (req, res) => {
         console.error('Error creating the user', error);
         res.render('signup', {error: 'Failed to create user, please try again.'});
     }
-
 });
 
 module.exports = router;

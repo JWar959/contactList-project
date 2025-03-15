@@ -2,15 +2,20 @@ extends layout.pug
 
 block content
     if created
-        p(style='color: green')= created        
+        p(style='color: green')= created
+    if error
+        p(style='color: red')=error        
+    
     h1 Sign in
-    label(for="username") Username
-    br
-    input( type="text" name="username" )
-    label(for="password") Password
-    br
-    input(name = "password" type = "password")
-    button(type="submit") Sign in
+    form(action ='/login', method = 'post')
+        label(for="username") Username
+        br
+        input( type="text" name="username" required )
+        label(for="password") Password
+        br
+        input(name = "password" type = "password" required)
+        button(type="submit") Sign in
+
     a(href='/') Nevermind
     br
     span Don't have an account yet? 

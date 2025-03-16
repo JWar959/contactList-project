@@ -2,9 +2,14 @@
 const express = require('express');
 const router = express.Router();
 
+/*
+
+Contains the get and post functionality for :id , :id/edit, and :id/delete
+
+*/
 
 router.get('/:id/edit', async (req, res) =>{
-    // Capture the contacts ID from the database
+    // Capture the contacts ID
     const contactId = req.params.id;
 
     // Collect the contacts information from the database within a try/catch block
@@ -27,7 +32,6 @@ router.get('/:id/edit', async (req, res) =>{
     }
 });
 
-
 router.post('/:id/edit', async (req, res) =>{
     // Capture the contacts ID from the database
     const contactId = req.params.id;
@@ -48,15 +52,16 @@ router.post('/:id/edit', async (req, res) =>{
         { column: 'contactByMail', value: req.body.contactByMail  ? 1 : 0 }
     ];    
 
-    // Collect the contacts information from the database within a try/catch block
     try{
-        // Try to update the contact's information from what we collected in the form
+        // Update the contact's information from what we collected in the form
         await req.db.update('Contacts', updatedData, [
             {column: 'id', value: contactId}
         ]);
 
         console.log(`Contact updated successfully`);
-        res.redirect(`/contact/${contactId}`); // Return to contact details page
+        // Return to contact details page
+        res.redirect(`/contact/${contactId}`);
+
     }catch(error){
         console.error('Error updating contact:', error);
         res.render('editContact', { contact: updatedData, error: 'Failed to update the contact. Please try again.'});
@@ -90,8 +95,9 @@ router.get('/:id', async (req, res) => {
         if (contact.length === 0) {
             return res.render('contactDetails', { error: 'Contact not found' });
         }
+        
+        res.render('contactDetails', { contact: contact[0] });
 
-        res.render('contactDetails', { contact: contact[0] }); // Pass correct contact object
     } catch (error) {
         console.error("Error retrieving the contact information: ", error);
         res.render('contactDetails', { error: "Failed to retrieve contact information from database." });

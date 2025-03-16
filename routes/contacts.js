@@ -1,20 +1,20 @@
 const express = require('express');
 const router = express.Router();
 
+/*
 
+Contains the get and post functionality for creating a new contact
 
-
+*/
 router.get('/newContact', (req, res) => {
     res.render('newContact');
 })
 
 router.post('/newContact', async (req, res) => {
  
-    // Use the middleware to check if the user already exists in the database
     const firstCheck = req.body.firstNameCreate;
     const lastCheck = req.body.lastNameCreate;
-
-    
+   
     const exisitingContact = await req.db.read('Contacts', [
         { column: 'firstName', value: firstCheck},
         { column: 'lastName' , value: lastCheck }
@@ -29,8 +29,6 @@ router.post('/newContact', async (req, res) => {
         return;
     }
     
-    console.log(`First and Last name Found:`, exisitingContact);
-
     await req.db.create('Contacts', [
         { column: 'firstName', value: req.body.firstNameCreate },
         { column: 'lastName', value: req.body.lastNameCreate },
@@ -46,56 +44,20 @@ router.post('/newContact', async (req, res) => {
         { column: 'contactByMail' , value: req.body.mailCheck !== undefined ? 1 : 0 }
     ]);
     
-    // Print to the console if a contact was added
     console.log(`New contact added to the contacts list: ${firstCheck} ${lastCheck}`);
     res.redirect('/');
 
 });
 
-router.get('/login', (req, res) => {
-    res.render('login');
-})
-
-router.get('/signup', (req, res) => {
-    res.render('signup');
-})
-
 router.get('/', async (req, res) => {
     try{
         // Get all rows from the Contacts table
-        const contacts = await req.db.read('Contacts', []); // This should get all of the contacts
-        res.render('contact', { contacts }); // This should send the contacts info to the view file
-    }catch (error){
-        // if we're here, something went wrong
+        const contacts = await req.db.read('Contacts', []);
+        res.render('contact', { contacts }); 
+    }catch (error){       
         console.error('Error fetching contacts:', error);
         res.render('contact', { error: 'Failed to retrieve contacts.' });        
     }
 });
 
-
-/*
-router.get('/:id', async (req, res) =>{
-    // Capture the contacts ID from the database
-    const contactId = req.params.id;
-
-    // Collect the contacts information from the database within a try/catch block
-    try{
-        const contact = await req.db.read('Contacts', [
-            { column: 'id', value: contactId }
-        ]);
-
-        // If nothing was found, then we'll return an error
-        if(contact.length === 0 ){
-            return res.render('contactDetails', {error: 'Contact not found'});
-        }
-
-        // If we're here, we're safe to render since a contact was found
-        res.render('contactDetails', { contact: contact[0]});
-
-    }catch(error){
-        console.error("Error retrieving the contact information: ", error);
-        res.render('contactDetails', {error: "Failed to retrieve contact information from database."});
-    }
-});
-*/
 module.exports = router;

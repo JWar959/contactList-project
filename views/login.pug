@@ -4,7 +4,10 @@ block content
     if created
         p(style='color: green')= created
     if error
-        p(style='color: red')=error        
+        p(style='color: red')= error 
+    if loggedOut
+        p(style='color: green')= loggedOut
+       
     
     h1 Sign in
     form(action ='/login', method = 'post')

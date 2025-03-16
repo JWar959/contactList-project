@@ -2,13 +2,30 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 
+/*  
+
+Contains the get and post functionality for login, sign-up, and logout 
+
+*/
+
 router.get('/login', (req, res) => {
     const createdMessage = req.query.created;
-    res.render('login', {created: createdMessage});
+    const loggedOutMessage = req.query.loggedOut;
+    res.render('login', {created: createdMessage, loggedOut: loggedOutMessage});
 });
 
 router.get('/signup', (req, res) => {
     res.render('signup');
+});
+
+router.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if(err){
+            console.error('Error loggin out:', err);
+            return res.redirect('/')
+        }
+        res.redirect('/login?loggedOut=You have successfully logged out.');
+    })
 });
 
 router.post('/login', async (req, res) => {

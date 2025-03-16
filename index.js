@@ -1,6 +1,12 @@
 const assert = require('assert');
 const sqlite = require('sqlite-async');
 
+/*
+John Warren
+CMPS 369
+Web Application Development
+Project 2
+*/
 
 class DataStore {
     constructor() {

@@ -40,7 +40,7 @@ router.post('/login', async (req, res) => {
 
         // If the user does NOT exist
         if (userExist.length === 0) {
-            return res.render('login', { error: "User does not exist. Please sign up first." });
+            return res.render('login', { error: "Login Failed" });
         }
 
         // Extract user information
